@@ -137,6 +137,13 @@ Applications can “remember” things from one request to the next by storing t
 the user session, a private storage that is available to each connected client. 
 
 
+# SQLAlchemy
+SQLAlchemy is a powerful relational database framework that supports several database 
+backends. It offers a high-level ORM and low-level access to the database’s native SQL 
+functionality.
+
+pip install flask-sqlalchemy
+
 
 
 
