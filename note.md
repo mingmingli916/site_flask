@@ -92,6 +92,31 @@ makes the integration of Moment.js into Jinja2 templates very easy.
 pip install flask-moment
 
 
+# Web Forms
+With HTML, it is possible to create web forms, in which users can enter information. 
+The form data is then submitted by the web browser to the server, typically in the 
+form of a POST request. The Flask request object exposes all the information sent by 
+the client in a request and, in particular for POST requests containing form data, 
+provides access to the user information through request.form.
+
+Although the support provided in Flask’s request object is sufficient for the handling 
+of web forms, there are a number of tasks that can become tedious and repetitive. 
+Two good examples are the generation of HTML code for the forms and the validation of 
+the submitted form data.
+
+The Flask-WTF extension makes working with web forms a much more pleasant experience.
+This extension is a Flask integration wrapper around the framework-agnostic WTForms package.
+
+pip install flask-wtf
+
+
+## Configuration
+Unlike most other extensions, Flask-WTF does not need to be initialized at the 
+application level, but it expects the application to have a secret key configured.
+
+Flask-WTF requires a secret key to be configured in the application because this key 
+is part of the mechanism the extension uses to protect all forms against 
+cross-site request forgery (CSRF) attacks. 
 
 
 
