@@ -45,11 +45,11 @@ that replaces the variables with actual values and returns a final response stri
 called rendering. For the task of rendering templates, Flask uses a powerful template 
 engine called Jinja2.
 
-# Rendering Template
+## Rendering Template
 By default Flask looks for templates in a templates subdirectory located inside the main 
 application directory. 
 
-# Bootstrap
+## Bootstrap
 Bootstrap is an open-source web browser framework from Twitter that provides 
 user interface components that help create clean and attractive web pages that are compatible 
 with all modern web browsers used on desktop and mobile platforms.
@@ -62,7 +62,7 @@ user interface elements through HTML, CSS, and JavaScript code. The ideal place 
 all this is in templates.
 
 
-# Bootstrap Integration with Flask-Bootstrap
+## Bootstrap Integration with Flask-Bootstrap
 The naive approach to integrating Bootstrap with the application is to make all the 
 necessary changes to the HTML templates, following the recommendations given by the 
 Bootstrap documentation. But this is an area where the use of a Flask extension 
@@ -75,16 +75,16 @@ note:
 If the application needs to add its own content to a block that already has some content, 
 then Jinja2’s super() function must be used. 
 
-# Links
+## Links
 To avoid direct links, Flask provides the url_for() helper function, which generates URLs 
 from the information stored in the application’s URL map.
 
 
-# Static Files
+## Static Files
 In its default configuration, Flask looks for static files in a subdirectory called static 
 located in the application’s root folder. 
 
-# Localization of Dates and Times with Flask-Moment
+## Localization of Dates and Times with Flask-Moment
 There is an excellent open source library written in JavaScript that renders dates and times 
 in the browser called Moment.js. Flask-Moment is an extension for Flask applications that 
 makes the integration of Moment.js into Jinja2 templates very easy.
@@ -117,6 +117,28 @@ application level, but it expects the application to have a secret key configure
 Flask-WTF requires a secret key to be configured in the application because this key 
 is part of the mechanism the extension uses to protect all forms against 
 cross-site request forgery (CSRF) attacks. 
+
+
+## Redirects and User Sessions
+When the last request sent is a POST request with form data, a refresh would cause 
+a duplicate form submission, which in almost all cases is not the desired action. 
+For that reason, the browser asks for confirmation from the user.
+
+Many users do not understand this warning from the browser. Consequently, it is 
+considered good practice for web applications to never leave a POST request as 
+the last request sent by the browser.
+
+This is achieved by responding to POST requests with a redirect instead of a 
+normal response. A redirect is a special type of response that contains a URL 
+instead of a string with HTML code. When the browser receives a redirect response, 
+it issues a GET request for the redirect URL, and that is the page that it displays.
+
+Applications can “remember” things from one request to the next by storing them in 
+the user session, a private storage that is available to each connected client. 
+
+
+
+
 
 
 
