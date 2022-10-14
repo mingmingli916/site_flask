@@ -144,6 +144,51 @@ functionality.
 
 pip install flask-sqlalchemy
 
+## Database Migrations with Flask-Migrate
+Flask-SQLAlchemy creates database tables from models only when they do not exist already, 
+so the only way to make it update tables is by destroying the old tables first—but of 
+course, this causes all the data in the database to be lost.
+
+A better solution is to use a database migration framework.
+
+The developer of SQLAlchemy has written a migration framework called Alembic, but instead of 
+using Alembic directly, Flask applications can use the Flask-Migrate extension, a lightweight 
+Alembic wrapper that integrates it with the flask command.
+
+## Creating a Migration Repository
+To expose the database migration commands, Flask-Migrate adds a flask db command with several 
+subcommands. When you work on a new project, you can add support for database migrations with 
+the init subcommand:
+
+flask db init
+
+## Creating a Migration Script
+Alembic migrations can be created manually or automatically using the revision and migrate 
+commands, respectively. A manual migration creates a migration skeleton script with empty 
+upgrade() and downgrade() functions that need to be implemented by the developer using 
+directives exposed by Alembic’s Operations object. An automatic migration attempts to 
+generate the code for the upgrade() and downgrade() functions by looking for differences 
+between the model definitions and the current state of the database.
+
+Automatic migrations are not always accurate and can miss some details that are ambiguous. 
+For example, if a column is renamed, an automatically generated migration may show that 
+the column in question was deleted and a new column was added with the new name. Leaving 
+the migration as is will cause the data in this column to be lost! For this reason, 
+migration scripts generated automatically should always be reviewed and manually corrected 
+if they have any inaccuracies.
+
+
+To make changes to your database schema with Flask-Migrate, the following procedure needs to be followed:
+1. Make the necessary changes to the model classes.
+2. Create an automatic migration script with the flask db migrate command.
+3. Review the generated script and adjust it so that it accurately represents the changes that were made to the models.
+4. Add the migration script to source control.
+5. Apply the migration to the database with the flask db upgrade command.
+
+
+
+
+
 
 
 

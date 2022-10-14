@@ -1,12 +1,12 @@
 from flask import Flask, render_template, session, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -18,6 +18,7 @@ app.config['SECRET_KEY'] = 'I am Mingming Li'  # flask-wtf
 bootstrap = Bootstrap(app)  # flask-bootstrap
 moment = Moment(app)  # flask-moment
 db = SQLAlchemy(app)  # flask-alchemy
+migrate = Migrate(app, db)  # flask-migrate
 
 
 @app.route('/', methods=['GET', 'POST'])
