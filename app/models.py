@@ -1,6 +1,6 @@
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from . import login_manager
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
@@ -45,7 +45,7 @@ class Role(db.Model):
         default_role = 'User'
         for r in roles:
             role = Role.query.filter_by(name=r).first()
-            if role is not None:
+            if role is None:
                 role = Role(name=r)
             role.reset_permission()
             for perm in roles[r]:
@@ -141,6 +141,12 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         return True
 
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
+
     # For better debugging and testing
     def __repr__(self):
         return f'<User {self.username}>'
@@ -157,3 +163,17 @@ class Permission:
     WRITE = 4
     MODERATE = 8
     ADMIN = 16
+
+
+# For added convenience, a custom AnonymousUser class that implements the can() and is_administrator()
+# methods is created as well. This will enable the application to freely call current_user.can() and
+# current_user.is_administrator() without having to check whether the user is logged in first.
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, perm):
+        return False
+
+    def is_administrator(self):
+        return False
+
+
+login_manager.anonymous_user = AnonymousUser
