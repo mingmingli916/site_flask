@@ -76,3 +76,9 @@ class User(db.Model):
     # For better debugging and testing
     def __repr__(self):
         return f'<User {self.username}>'
+
+
+# automatically import objects
+@app.shell_context_processor
+def make_shell_context():
+    return dict(db=db, User=User, Role=Role)
