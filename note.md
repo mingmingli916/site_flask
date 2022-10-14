@@ -194,11 +194,41 @@ pip install flask-mail
 
 
 
+# Large Application Structure
+## Using an Application Factory
+The way the application is created in the single-file version is very convenient, but it has one big drawback.
+Because the application is created in the global scope, there is no way to apply configuration changes 
+dynamically: by the time the script is running, the application instance has already been created, 
+so it is already too late to make configuration changes. This is particularly important for unit tests 
+because sometimes it is necessary to run the application under different configuration settings for 
+better test coverage.
+
+
+The solution to this problem is to delay the creation of the application by moving it into a factory function 
+that can be explicitly invoked from the script. This not only gives the script time to set the configuration, 
+but also the ability to create multiple application instances — another thing that can be very useful during 
+testing.
+
+
+## Implementing Application Functionality in a Blueprint
+
+The conversion to an application factory introduces a complication for routes. In single-script applications, the application instance exists in the global scope, so routes can be easily defined using the app.route decorator. But now that the application is created at runtime, the app.route decorator begins to exist only after create_app() is invoked, which is too late. Custom error page handlers present the same problem, as these are defined with the app.errorhandler decorator.
+
+Luckily, Flask offers a better solution using blueprints. A blueprint is similar to an application in that it can also define routes and error handlers. The difference is that when these are defined in a blueprint they are in a dormant state until the blueprint is registered with an application, at which point they become part of it. 
 
 
 
 
 
+
+## ALL
+1. configuration (config.py)
+2. application (app)
+3. application script (flasky.py)
+4. requirement file (requirement.txt)
+5. unit test (tests)
+6. database setup (flask db init; flask db upgrade)
+7. run the application (flask run)
 
 
 
