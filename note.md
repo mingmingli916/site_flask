@@ -186,6 +186,12 @@ To make changes to your database schema with Flask-Migrate, the following proced
 5. Apply the migration to the database with the flask db upgrade command.
 
 
+# Email
+Although the smtplib package from the Python standard library can be used to send email inside 
+a Flask application, the Flask-Mail extension wraps smtplib and integrates it nicely with Flask.
+
+pip install flask-mail
+
 
 
 
