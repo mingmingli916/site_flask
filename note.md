@@ -257,5 +257,13 @@ without being tied to a specific authentication mechanism.
 
 
 
+# Profile
+## Gravatar
+Gravatar associates avatar images with email addresses. Users create an account at https://gravatar.com 
+and then upload their images. The service exposes the user’s avatar through a specially crafted URL 
+that includes the MD5 hash of the user’s email address.
+
+
+
 
 
