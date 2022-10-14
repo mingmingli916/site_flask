@@ -249,5 +249,13 @@ but a hash of it.
 The routes related to the user authentication subsystem will be added to a second blueprint, called auth. Using different blueprints for different subsystems of the application is a great way to keep the code neatly organized.
 
 
+## User Authentication with Flask-Login
+When users log in to the application, their authenticated state has to be recorded in the user session, 
+so that it is remembered as they navigate through different pages. Flask-Login is a small but extremely 
+useful extension that specializes in managing this particular aspect of a user authentication system, 
+without being tied to a specific authentication mechanism.
+
+
+
 
 
