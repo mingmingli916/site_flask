@@ -231,5 +231,20 @@ Luckily, Flask offers a better solution using blueprints. A blueprint is similar
 7. run the application (flask run)
 
 
+# User Authentication
+There are many excellent Python authentication packages, but none of them do everything. 
+The user authentication solution presented here uses several packages and provides the glue 
+that makes them work well together. This is the list of packages that will be used, and what 
+they’re used for:
+- Flask-Login: Management of user sessions for logged-in users
+- Werkzeug: Password hashing and verification
+- itsdangerous: Cryptographically secure token generation and verification
+
+
+## Password Security
+The key to storing user passwords securely in a database relies on not storing the password itself 
+but a hash of it. 
+
+
 
 
