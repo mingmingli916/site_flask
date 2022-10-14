@@ -245,6 +245,9 @@ they’re used for:
 The key to storing user passwords securely in a database relies on not storing the password itself 
 but a hash of it. 
 
+## Creating an Authentication Blueprint
+The routes related to the user authentication subsystem will be added to a second blueprint, called auth. Using different blueprints for different subsystems of the application is a great way to keep the code neatly organized.
+
 
 
 
