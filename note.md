@@ -217,10 +217,6 @@ The conversion to an application factory introduces a complication for routes. I
 Luckily, Flask offers a better solution using blueprints. A blueprint is similar to an application in that it can also define routes and error handlers. The difference is that when these are defined in a blueprint they are in a dormant state until the blueprint is registered with an application, at which point they become part of it. 
 
 
-
-
-
-
 ## ALL
 1. configuration (config.py)
 2. application (app)
@@ -257,14 +253,12 @@ without being tied to a specific authentication mechanism.
 
 
 
-# Profile
-## Gravatar
+# Gravatar
 Gravatar associates avatar images with email addresses. Users create an account at https://gravatar.com 
 and then upload their images. The service exposes the user’s avatar through a specially crafted URL 
 that includes the MD5 hash of the user’s email address.
 
-# Posts
-## Flask-PageDown
+# Flask-PageDown
 Flask-PageDown, a PageDown wrapper for Flask that integrates PageDown with Flask-WTF forms.
 The Flask-PageDown extension defines a PageDownField class that has the same interface as 
 the TextAreaField from WTForms. Before this field can be used, the extension needs to be initialized.
