@@ -81,6 +81,22 @@ class User(UserMixin, db.Model):
     avatar_hash = db.Column(db.String(32))
     posts = db.relationship('Post', backref='author', lazy='dynamic')  # author_id in Post
 
+    followed = db.relationship('Follow',
+                               # To eliminate any ambiguity between foreign keys by specifying in each relationship
+                               # which foreign key to use through the foreign_keys optional argument.
+                               foreign_keys=[Follow.follower_id],
+                               # This lazy mode causes the related object to be loaded immediately from the join query.
+                               backref=db.backref('follower', lazy='joined'),
+                               lazy='dynamic',
+                               # Using the value all, delete-orphan leaves the default cascade options enabled
+                               # and adds the delete behavior for orphans.
+                               cascade='all, delete-orphan')
+    followers = db.relationship('Follow',
+                                foreign_keys=[Follow.followed_id],
+                                backref=db.backref('followed', lazy='joined'),
+                                lazy='dynamic',
+                                cascade='all, delete-orphan')
+
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.role is None:
@@ -90,6 +106,10 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(default=True).first()
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = self.gravatar_hash()
+
+    # For better debugging and testing
+    def __repr__(self):
+        return f'<User {self.username}>'
 
     @property  # get
     def password(self):
@@ -178,10 +198,25 @@ class User(UserMixin, db.Model):
         hashed = self.avatar_hash or self.gravatar_hash()
         return f'{url}/{hashed}?s={size}&d={default}&r={rating}'
 
-    # For better debugging and testing
-    def __repr__(self):
-        return f'<User {self.username}>'
+    def follow(self, user):
+        if not self.is_following(user):
+            f = Follow(follower=self, followed=user)
+            db.session.add(f)
 
+    def unfollow(self, user):
+        f = self.followed.filter_by(followed_id=user.id).first()
+        if f:
+            db.session.delete(f)
+
+    def is_following(self, user):
+        if user.id is None:
+            return False
+        return self.followed.filter_by(followed_id=user.id).first() is not None
+
+    def is_followed_by(self, user):
+        if user.id is None:
+            return False
+        return self.followers.filter_by(follower_id=user.id).first is not None
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -228,3 +263,10 @@ class Post(db.Model):
 
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
+
+
+class Follow(db.Model):
+    __tablename__ = 'follows'
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    timestamp = db.Column(db.DataTime, default=datetime.utcnow)

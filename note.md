@@ -263,5 +263,12 @@ Flask-PageDown, a PageDown wrapper for Flask that integrates PageDown with Flask
 The Flask-PageDown extension defines a PageDownField class that has the same interface as 
 the TextAreaField from WTForms. Before this field can be used, the extension needs to be initialized.
 
+# Self-Referential Relationships
+A relationship in which both sides belong to the same table is said to be self-referential.
+
+
+
+
+
 
 
