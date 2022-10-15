@@ -266,7 +266,34 @@ the TextAreaField from WTForms. Before this field can be used, the extension nee
 # Self-Referential Relationships
 A relationship in which both sides belong to the same table is said to be self-referential.
 
+# URI fragment
+In computer hypertext, a URI fragment is a string of characters that refers to a resource that is subordinate to another, primary resource. The primary resource is identified by a Uniform Resource Identifier (URI), and the fragment identifier points to the subordinate resource.
 
+The fragment identifier introduced by a hash mark # is the optional last part of a URL for a document. It is typically used to identify a portion of that document. The generic syntax is specified in RFC 3986. The hash-mark separator in URIs is not part of the fragment identifier.
+
+
+# Application Programming Interfaces
+In recent years, there has been a trend in web applications to move more and more of the business logic to the client side, producing an architecture that is known as Rich Internet Applications (RIAs). In RIAs, the server’s main (and sometimes only) function is to provide the client application with data retrieval and storage services. In this model, the server becomes a web service or application programming interface (API).
+
+There are several protocols by which RIAs can communicate with a web service. Remote procedure call (RPC) protocols such as XML-RPC or its derivative, the Simplified Object Access Protocol (SOAP), were popular choices a few years ago. More recently, the Representational State Transfer (REST) architecture has emerged as the favorite for web applications due to its being built on the familiar model of the World Wide Web.
+
+Flask is an ideal framework to build RESTful web services, thanks to its lightweight nature. 
+
+
+
+## REST
+the REST architectural style for web services in terms of its six defining characteristics:
+- [Client–server] There must be a clear separation between clients and servers.
+- [Stateless] A client request must contain all the information that is necessary to carry it out. The server must not store any state about the client that persists from one request to the next.
+- [Cache] Responses from the server can be labeled as cacheable or noncacheable so that clients (or intermediaries between clients and servers) can use a cache for optimization purposes.
+- [Uniform interface] The protocol by which clients access server resources must be consistent, well defined, and standardized. This is the most complex aspect of REST, covering the use of unique resource identifiers, resource representations, self-descriptive mes‐ sages between client and server, and hypermedia.
+- [Layered system] Proxy servers, caches, or gateways can be inserted between clients and servers as necessary to improve performance, reliability, and scalability.
+- [Code-on-demand] Clients can optionally download code from the server to execute in their context.
+
+## Request and Response Bodies
+Resources are sent back and forth between client and server in the bodies of requests and responses, but REST does not specify the format to use to encode resources. The Content-Type header in requests and responses is used to indicate the format in which a resource is encoded in the body. 
+
+The two formats commonly used with RESTful web services are JavaScript Object Notation (JSON) and Extensible Markup Language (XML). For web-based RIAs, JSON is attractive due to being much more concise than XML, and because of its close ties to JavaScript, the client-side scripting language used by web browsers.
 
 
 
