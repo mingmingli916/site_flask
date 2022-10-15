@@ -113,6 +113,8 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(default=True).first()
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = self.gravatar_hash()
+        # to show yourself post on followed posts.
+        self.follow(self)
 
     # For better debugging and testing
     def __repr__(self):
@@ -227,8 +229,17 @@ class User(UserMixin, db.Model):
 
     @property
     def followed_posts(self):
-        return Post.query.join(Follow, Follow.followed_id == Post.author_id)\
+        return Post.query.join(Follow, Follow.followed_id == Post.author_id) \
             .filter(Follow.follower_id == self.id)
+
+    @staticmethod
+    def add_self_follow():
+        for user in User.query.all():
+            if not user.is_following(user):
+                user.follow(user)
+                db.session.add(user)
+        db.session.commit()
+
 
 @login_manager.user_loader
 def load_user(user_id):
