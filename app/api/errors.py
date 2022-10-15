@@ -21,6 +21,8 @@ def forbidden(message):
     return response
 
 
+# To avoid having to add exception-catching code in view functions,
+# a global exception handler can be installed using Flask’s errorhandler decorator.
 @api.errorhandler(ValidationError)
 def validation_error(e):
     return bad_request(e.args[0])
