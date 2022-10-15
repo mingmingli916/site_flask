@@ -63,6 +63,13 @@ class Role(db.Model):
         return f'<Role {self.name}>'
 
 
+class Follow(db.Model):
+    __tablename__ = 'follows'
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -218,6 +225,7 @@ class User(UserMixin, db.Model):
             return False
         return self.followers.filter_by(follower_id=user.id).first is not None
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -263,10 +271,3 @@ class Post(db.Model):
 
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
-
-
-class Follow(db.Model):
-    __tablename__ = 'follows'
-    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    timestamp = db.Column(db.DataTime, default=datetime.utcnow)
