@@ -84,4 +84,5 @@ def edit_profile_admin(id):
 @main.route('/post/<int:id>')
 def post(id):
     post = Post.query.get_or_404(id)
+    # [post] for reuse of _posts.html
     return render_template('post.html', posts=[post])
