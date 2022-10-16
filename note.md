@@ -296,6 +296,13 @@ Resources are sent back and forth between client and server in the bodies of req
 The two formats commonly used with RESTful web services are JavaScript Object Notation (JSON) and Extensible Markup Language (XML). For web-based RIAs, JSON is attractive due to being much more concise than XML, and because of its close ties to JavaScript, the client-side scripting language used by web browsers.
 
 
+# Test
+Having a test suite is important, but it is equally important to know how good or bad it is. Code coverage tools measure how much of the application is exercised by unit tests and can provide a detailed report that indicates which parts of the application code are not being tested. This information is invaluable, because it can be used to direct the effort of writing new tests to the areas that need it most.
+
+Python has an excellent code coverage tool appropriately called coverage. 
+
+
+
 
 
 
